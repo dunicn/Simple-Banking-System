@@ -119,7 +119,7 @@ class SimpleBankingSystem:
         income_input = int(input())
 
         with conn:
-            c.execute(f"UPDATE card SET balance= balance + {income_input} WHERE number = {self.card_number}")
+            c.execute("UPDATE card SET balance= balance + {} WHERE number = {}".format(income_input, self.card_number))
         print("Income was added!")
 
     def get_balance(self):
@@ -146,14 +146,14 @@ class SimpleBankingSystem:
                 print("Not enough money!")
             else:
                 with conn:
-                    c.execute(f"UPDATE card SET balance= balance - {transfer_input} WHERE number = {sending_card}")
+                    c.execute("UPDATE card SET balance= balance - {} WHERE number = {}".format(transfer_input, sending_card))
                 with conn:
-                    c.execute(f"UPDATE card SET balance= balance + {transfer_input} WHERE number = {receiving_card}")
+                    c.execute("UPDATE card SET balance= balance + {} WHERE number = {}".format(transfer_input, receiving_card))
                 print("Success!")
 
     def close_account(self):
         with conn:
-            c.execute(f"DELETE FROM card WHERE number = {self.card_number}")
+            c.execute("DELETE FROM card WHERE number = {}".format(self.card_number))
         print("The account has been closed!")
 
     def account_menu(self):
